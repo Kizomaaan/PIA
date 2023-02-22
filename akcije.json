@@ -1,0 +1,12 @@
+[ 
+	{    "idKorisnika": 3,    "idRadionice": 9,    "type": 0  }, 
+	{    "idKorisnika": 3,    "idRadionice": 10,    "type": 0  }, 
+	{    "idKorisnika": 3,    "idRadionice": 11,    "type": 0  }, 
+	{    "idKorisnika": 3,    "idRadionice": 12,    "type": 0  },
+	{    "idKorisnika": 3,    "idRadionice": 9,    "type": 1,    "tekst": "Great workshop, learned a lot!"  }, 
+	{    "idKorisnika": 3,    "idRadionice": 10,    "type": 1,    "tekst": "The instructor was very knowledgeable and helpful."  },
+	{    "idKorisnika": 3,    "idRadionice": 11,    "type": 1,    "tekst": "The hands-on activities were fun and engaging."  }, 
+	{    "idKorisnika": 3,    "idRadionice": 12,    "type": 1,    "tekst": "I would definitely recommend this workshop to others!"  },
+	{    "idKorisnika": 3,    "idRadionice": 9,    "type": 1,    "tekst": "The workshop exceeded my expectations."  }, 
+	{    "idKorisnika": 3,    "idRadionice": 10,    "type": 1,    "tekst": "I learned practical skills that I can use in my job."  }
+]
