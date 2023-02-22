@@ -1,0 +1,131 @@
+export class Akcija{
+idKorisnika: number
+idRadionice: number
+type: number
+tekst: string
+}
+
+---------------------------------------------------------------------------------------------------------
+
+<div *ngIf="MojeAkcijeStranica" class="mw-workshops-container">
+      <div class="mw-workshop-list" style="float: left; width: 30%; margin-left: 4%;">
+         <h2 style="color: white; font-size: 36px;">Lajkovane radionice:</h2>
+         <table class="mw-table">
+            <thead>
+               <tr class="mw-table-row mw-table-header-row">
+                  <th class="mw-table-cell mw-table-header-cell">Radionica</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="mw-table-row" *ngFor="let radionica of akcijeRadionice; let i = index" >
+                  <td class="mw-table-cell" *ngIf = "akcije[i].type === 0">{{ radionica.naziv }}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div class="mw-workshop-list" style="float: right; width: 60%; margin-right: 4%;">
+         <h2 style="color: white; font-size: 36px;">Komentarisane radionice:</h2>
+         <table class="mw-table">
+            <thead>
+               <tr class="mw-table-row mw-table-header-row">
+                  <th class="mw-table-cell mw-table-header-cell">Radionica</th>
+                  <th class="mw-table-cell mw-table-header-cell">Komentar</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="mw-table-row"  *ngFor="let radionica of akcijeRadionice; let i = index">
+                  <td *ngIf = "akcije[i].type === 1" class="mw-table-cell">{{ radionica.naziv }}</td>
+                  <td *ngIf = "akcije[i].type === 1" class="mw-table-cell">{{ akcije[i].tekst }}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+
+---------------------------------------------------------------------------------------------------------
+
+akcije: Akcija[];
+  akcijeRadionice: Radionica[];
+
+  ucitajAkcije(){
+    this.akcije = [];
+    this.akcijeRadionice = [];
+    this.userService.getAkcije(this.ulogovaniKorisnik.id).subscribe((data: Akcija[]) => {
+      //this.lajkovi = data.filter(akcija => akcija.type == 0)
+      //this.komentari = data.filter(akcija => akcija.type == 1)
+      this.akcije = data;
+      for (let i = 0; i < data.length; i++) {
+        this.radioniceService.getRadionica(data[i].idRadionice).subscribe((data: Radionica) => {
+          this.akcijeRadionice.push(data)
+        });
+      }
+      
+    });
+
+  }
+  
+  ---------------------------------------------------------------------------------------------------------
+
+getAkcije(idUserF){
+    const data = {
+      idUser: idUserF
+    }
+    return this.http.post(`${this.uri}/akcije/getAkcije`, data)
+  }
+  
+---------------------------------------------------------------------------------------------------------
+import akcijeRouter from './routes/akcije.routes';
+router.use('/akcije', akcijeRouter)
+
+-- -- -- -- -- -- -- -- -- -- -- --
+
+import express from 'express'
+import { AkcijeController } from '../controllers/akcije.controller'
+
+const akcijeRouter = express.Router();
+
+akcijeRouter.route('/getAkcije').post(
+    (req, res)=> new AkcijeController().getAkcije(req, res)
+)
+
+export default akcijeRouter;
+
+-- -- -- -- -- -- -- -- -- -- -- --
+
+import mongoose from "mongoose";
+
+const Schema = mongoose.Schema;
+
+let Akcija = new Schema({
+    idKorisnika: {
+        type: Number
+    },
+    idRadionice: {
+        type: Number
+    },
+    type: {
+        type: Number
+    },
+    tekst: {
+        type: String
+    }
+})
+
+export default mongoose.model('AkcijaModel', Akcija, 'akcije')
+
+-- -- -- -- -- -- -- -- -- -- -- --
+
+import express from 'express'
+import AkcijaModel from '../models/akcije'
+
+export class AkcijeController{
+
+    getAkcije =  (req: express.Request, res: express.Response)=>{
+        let idUser = req.body.idUser;
+        AkcijaModel.find({'idKorisnika': idUser}, (err, akcije)=>{
+            if(err) console.log(err)
+            else res.json(akcije)
+        })
+    }
+   
+}
