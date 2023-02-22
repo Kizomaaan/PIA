@@ -1,53 +1,67 @@
-# PIA
-
 U frontendu:
 npm install file-saver --save
-import { saveAs } from 'file-saver';
 
-sacuvajSablon(){
-    const jsonRadionica = JSON.stringify(this.promenjenaRadionica);
-    const blob = new Blob([jsonRadionica], { type: 'application/json' });
-    saveAs(blob, 'radionica.json');
-  }
+--------------------------------------------
 
-pomocnaRadionica: Radionica;
-  onFileSelected(event: any): void {
+	import { saveAs } from 'file-saver';
+
+	sacuvajSablon(){
+	    const jsonRadionica = JSON.stringify(this.promenjenaRadionica);
+	    const blob = new Blob([jsonRadionica], { type: 'application/json' });
+	    saveAs(blob, 'radionica.json');
+	  }
+
+    pomocnaRadionica: Radionica;
+
+    onFileSelected(event: any): void {
+  
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
     reader.readAsText(file);
     reader.onload = () => {
-      const jsonData = JSON.parse(reader.result as string);
-      this.pomocnaRadionica = jsonData;
-      this.naziv = this.pomocnaRadionica.naziv;
-      this.datum =  this.pomocnaRadionica.datum;
-      this.mesto = this.pomocnaRadionica.mesto;
-      this.idOrganizatora =  this.pomocnaRadionica.idOrganizatora;
-      //this.nizUcesnika =  this.pomocnaRadionica.nizUcesnika;
-      this.kratakOpis =  this.pomocnaRadionica.kratakOpis;
-      this.dugacakOpis =  this.pomocnaRadionica.dugacakOpis;   
-      this.glavnaSlika = this.pomocnaRadionica.glavnaSlika;
-      this.galerijaSlika = this.pomocnaRadionica.galerijaSlika;
-    };
-  }
+	      const jsonData = JSON.parse(reader.result as string);
+	      this.pomocnaRadionica = jsonData;
+	      this.naziv = this.pomocnaRadionica.naziv;
+	      this.datum =  this.pomocnaRadionica.datum;
+	      this.mesto = this.pomocnaRadionica.mesto;
+	      this.idOrganizatora =  this.pomocnaRadionica.idOrganizatora;
+	      //this.nizUcesnika =  this.pomocnaRadionica.nizUcesnika;
+	      this.kratakOpis =  this.pomocnaRadionica.kratakOpis;
+	      this.dugacakOpis =  this.pomocnaRadionica.dugacakOpis;   
+	      this.glavnaSlika = this.pomocnaRadionica.glavnaSlika;
+	      this.galerijaSlika = this.pomocnaRadionica.galerijaSlika;
+	    };
+    }
+
+---------------------------------------------
+
 HTML code za DodavanjeRadionicaStranica kako bi imali import json fajla:
-<tr>
-	<td>
-              	<div class="group">      
-                	<input type="file" (change)="onFileSelected($event)">
-                	<span class="highlight"></span>
-                	<span class="bar"></span>
-                	<label class="aktivnaLabela">Import JSON sablona</label>
-              	</div>
-	</td>
-</tr>
+
+	<tr>
+		<td>
+		<div class="group">      
+		<input type="file" (change)="onFileSelected($event)">
+		<span class="highlight"></span>
+		<span class="bar"></span>
+		<label class="aktivnaLabela">Import JSON sablona</label>
+		</div>
+		</td>
+	</tr>
 
 Takodje treba dodati f-ju sacuvajSablon() na click buttona za to 
+
+---------------------------------------------
+
 U backednu:
 npm install nodemailer
-import UserModel from '../models/user'
-const nodemailer = require('nodemailer')
 
-// gamil app-password: bwzdtitgejylsion
+--------------------------------------------
+
+	import UserModel from '../models/user'
+	const nodemailer = require('nodemailer')
+
+	// gamil app-password: bwzdtitgejylsion
+
     delete = async (req, res) => {
         console.log("Usao u delete");
       
