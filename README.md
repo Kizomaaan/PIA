@@ -2,7 +2,6 @@
 
 U frontendu:
 npm install file-saver --save
---------------------------------------------
 import { saveAs } from 'file-saver';
 
 sacuvajSablon(){
@@ -30,7 +29,6 @@ pomocnaRadionica: Radionica;
       this.galerijaSlika = this.pomocnaRadionica.galerijaSlika;
     };
   }
----------------------------------------------
 HTML code za DodavanjeRadionicaStranica kako bi imali import json fajla:
 <tr>
 	<td>
@@ -44,10 +42,8 @@ HTML code za DodavanjeRadionicaStranica kako bi imali import json fajla:
 </tr>
 
 Takodje treba dodati f-ju sacuvajSablon() na click buttona za to 
----------------------------------------------------------------------------------------------------------------------------------------
 U backednu:
 npm install nodemailer
---------------------------------------------
 import UserModel from '../models/user'
 const nodemailer = require('nodemailer')
 
